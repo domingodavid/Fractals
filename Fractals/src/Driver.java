@@ -15,15 +15,24 @@ public class Driver extends JPanel implements ActionListener{
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 1000, 1000);
-		rings(0,0, 100, g);
+		//rings(0,0, 500, g);
+		squares(300,300, 100, g);
 	}
 	
 	
 	public void rings(int x, int y, int width, Graphics g) {
 		
 		if(width>10) {
-			g.setColor(Color.blue);
-			g.drawOval(x, y, width, width);
+			
+			int red = (int)(Math.random()*256);
+			int green = (int)(Math.random()*256);
+			int blue = (int)(Math.random()*256);
+			g.setColor(  new Color(red, green, blue) );
+			
+			g.drawOval(x, y, width, width);			
+			//recursive step
+			//how do the parameters change?
+			rings(x+5 , y+5 , width-10 , g);
 			
 		}
 		
@@ -45,6 +54,26 @@ public class Driver extends JPanel implements ActionListener{
 	
 	
 	public void squares(int x, int y, int width, Graphics g) {
+		
+		if(width>5) {
+			
+			int red = (int)(Math.random()*256);
+			int green = (int)(Math.random()*256);
+			int blue = (int)(Math.random()*256);
+			g.setColor(  new Color(red, green, blue) );
+			
+			//each method draws 1 square!
+			g.fillRect(x,  y,  width, width);
+			
+			//recursively call method for the top-center squares
+			squares(x + width/3, y - 2*width/3,width/3,g);
+			
+			//handle down
+			
+			//left, right, corners
+			
+		}
+		
 		
 	}
 	
@@ -85,7 +114,7 @@ public class Driver extends JPanel implements ActionListener{
 			frame.setVisible(true);
 					
 		}
-	Timer t = new Timer(1000, this);
+	Timer t = new Timer(16, this);
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
