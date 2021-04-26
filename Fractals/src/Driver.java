@@ -15,69 +15,81 @@ public class Driver extends JPanel implements ActionListener{
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 1000, 1000);
-		//rings(0,0, 500, g);
-		squares(300,300, 100, g);
+	//	rings(0,0, 100, g);
+	//	squares(300,300, 100, g);
+		donut(400,400, 0,200, g);
+		clover(200, 200, 100, g);
 	}
 	
 	
 	public void rings(int x, int y, int width, Graphics g) {
 		
 		if(width>10) {
-			
 			int red = (int)(Math.random()*256);
-			int green = (int)(Math.random()*256);
-			int blue = (int)(Math.random()*256);
-			g.setColor(  new Color(red, green, blue) );
+			int gr = (int)(Math.random()*256);
+			int bl = (int)(Math.random()*256);
 			
-			g.drawOval(x, y, width, width);			
-			//recursive step
-			//how do the parameters change?
-			rings(x+5 , y+5 , width-10 , g);
+			g.setColor(new Color(red,gr,bl));
+			g.drawOval(x, y, width, width);
+			
+			//recursive call to rings
+			//how do the parameters change per method call?
+			rings( x+2, y+2, width - 4,g);
+			
+			
 			
 		}
 		
 	}
 	
-	public void concentricSquares(int x, int y, int width, Graphics g) {
-		g.setColor(Color.blue);
-				
-	}
+
 	
 	public void clover(int x, int y, int width, Graphics g) {
 		g.setColor(Color.blue);
+		if(width>50) {
+			g.drawOval(x, y, width, width);
+		}
 				
 	}
 	
 	public void snowFlake(int len, int x1, int y1, int x2, int y2, Graphics g) {
-		
+	
 	}
 	
 	
 	public void squares(int x, int y, int width, Graphics g) {
-		
-		if(width>5) {
+		if(width>2) {
+			g.setColor(Color.blue);
+			g.fillRect(x, y, width, width);
 			
-			int red = (int)(Math.random()*256);
-			int green = (int)(Math.random()*256);
-			int blue = (int)(Math.random()*256);
-			g.setColor(  new Color(red, green, blue) );
+			//up
+			squares(x+width/3, y-2*width/3, width/3, g);
 			
-			//each method draws 1 square!
-			g.fillRect(x,  y,  width, width);
-			
-			//recursively call method for the top-center squares
-			squares(x + width/3, y - 2*width/3,width/3,g);
-			
-			//handle down
-			
-			//left, right, corners
+			//left
+			squares(x-2*width/3,y+width/3 , width/3, g);
+				
 			
 		}
-		
-		
 	}
 	
+	
+	int red=0, green=200, blue=100;
 	public void donut(int x, int y, int angle, int width, Graphics g) {
+		
+		if(angle<360) {
+			int red = (int)(Math.random()*256);
+			int gr = (int)(Math.random()*256);
+			int bl = (int)(Math.random()*256);
+			g.setColor(new Color(0,green++%256,blue++%256));
+		
+			int newX, newY;
+			newX = (int)(Math.cos(angle)*width)+width;
+			newY = (int)(Math.sin(angle)*width)+width;
+			g.drawOval(newX, newY, width*2, width*2);
+			
+			donut(x,y,angle+1, width, g);
+		}
+		
 		
 	}
 	
@@ -109,12 +121,12 @@ public class Driver extends JPanel implements ActionListener{
 			//this part makes sure the x button closes the program
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
-			//t.start();
+			t.start();
 			//make the frame show up
 			frame.setVisible(true);
 					
 		}
-	Timer t = new Timer(16, this);
+	Timer t = new Timer(100, this);
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
